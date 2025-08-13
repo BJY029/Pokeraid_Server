@@ -1,0 +1,31 @@
+version : '3.8' #Docker Compose 파일 버전
+services:
+  mysql:        #MySQL 데이터 베이스 컨테이너
+    image: mysql:8.0
+    container_name : mysql
+    environment:
+      MYSQL_ROOT_PASSWORD : root
+      MYSQL_DATABASE : pokeraid #자동으로 pokeraid DB를 생성
+      #일반 사용자 계정 생성
+      MYSQL_USER : user   
+      MYSQL_PASSWORD : secret123
+    ports:
+      - "3307:3306" #로컬 3307 포트를 컨테이너 3306애 연결
+    volumes:
+      - "mysql-data:/var/lib/mysql" #컨테이너가 꺼져도 데이터 유지
+
+  redis:      #Redis 캐시 서버 컨테이너, 기본 Redis 서버를 실행한다.
+    image: redis:latest
+    container_name : redis
+    ports:
+      - "6379:6379" #로컨 6379 포트로 접근 가능하다.
+  
+  redisinsight: #Redis Insight UI 도구 컨테이너(웹 브라우저에서 접근)
+    image: redislabs/redisinsight:1.14.0 #브라우저에서 http://localhost:8001로 접속 가능
+    container_name : redisinsight
+    ports:
+      - "8001:8001"
+    restart : always
+  
+volumes:
+  mysql-data: #MySQL 데이터 영속 저장용 볼륨
