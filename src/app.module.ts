@@ -5,6 +5,7 @@ import { User } from "./user/user.entity";
 import { Module } from "@nestjs/common";
 import { ShopModule } from "./shop/shop,module";
 import { BlockchainModule } from "./blockchain/blockchain.module";
+import { RoomModule } from "./room/room.module";
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { BlockchainModule } from "./blockchain/blockchain.module";
     UserModule,
     ShopModule,
     BlockchainModule,
+    RoomModule,
   ]
 })
 export class AppModule { }
