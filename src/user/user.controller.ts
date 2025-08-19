@@ -93,4 +93,9 @@ export class UserController {
     //user 정보와 private key를 지갑 연결 서비스에 넘긴다.
     return this.userService.walletLink(request['user'].seq, dto.privateKey);
   }
+
+  @Get('test')
+  async test() {
+    (undefined as any).x();
+  }
 }
