@@ -101,4 +101,24 @@ export class PoketmonService {
 
         return this.userPokemonRepo.save(userPokemon);
     }
+
+    //모든 포켓몬을 스킬과 함께 반환하는 함수
+    async getAllPokemonWithSkills() {
+        //포켓몬 DB에서 포켓몬들을 불러온다.
+        const pokemons = await this.pokemonRepo.find();
+        if (!pokemons) throw new Error("no pokemon");
+        //Promise.all 연산 진행
+        return await Promise.all(pokemons.map(async p => {
+            //각 포켓몬들을 돌면서, 해당 포켓몬 id와 일치하는 포켓몬 스킬 정보들을 불러온다.
+            const skills = await this.PokemonSkillRepo.find({
+                where: { pokemon_id: p.id },
+            });
+            //포켓몬과, 해당 포켓몬들의 스킬들을 반환한다.
+            return {
+                ...p,
+                skills: skills,
+            };
+        }));
+    }
+
 }

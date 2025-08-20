@@ -200,7 +200,7 @@ export class RedisService {
 
     //전투상태를 제거하는 함수
     async removeBattleState(roomId: string) {
-        await this.client.del(`raid:${roomId}:state`);
+        await this.client.del(`raid:${roomId}:battleState`);
     }
 
     //특정 user의 방 매핑 정보를 삭제하는 함수
